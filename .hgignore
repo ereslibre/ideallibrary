@@ -1,6 +1,7 @@
 syntax: glob
 .waf*
 .lock-wscript
+.lock-wafbuild
 build/
 doc/
 
