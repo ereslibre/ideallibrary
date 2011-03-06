@@ -1,0 +1,6 @@
+syntax: glob
+.waf*
+.lock-wscript
+build/
+doc/
+
