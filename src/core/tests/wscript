@@ -29,8 +29,9 @@ def build(bld):
 		    source       = unitTest,
 		    target       = testName + "Test",
 		    includes     = '.. ../..',
-		    use          = 'CPPUNIT IDEAL idealcore')
+		    install_path = None,
+		    use          = 'CPPUNIT idealcore')
 
-	if bld.cmd == "install":
+	if bld.is_install or bld.options.all_tests:
 		bld.options.all_tests = True
 		bld.add_post_fun(waf_unit_test.summary)

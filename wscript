@@ -84,8 +84,6 @@ def configure(conf):
     else:
         conf.undefine('NDEBUG')
 
-    conf.env['RPATH_IDEAL'] = conf.env['PREFIX'] + '/lib'
-
     if Options.options.release:
         Logs.pprint('BLUE', '*** Going to compile in RELEASE mode')
         conf.env['CXXFLAGS'] += ['-O2', '-w']
