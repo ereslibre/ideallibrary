@@ -24,25 +24,11 @@
 namespace IdealCore {
 
 Mutex::Private::Private()
-    : m_refs(1)
 {
 }
 
 Mutex::Private::~Private()
 {
-}
-
-void Mutex::Private::ref()
-{
-    ++m_refs;
-}
-
-void Mutex::Private::deref()
-{
-    --m_refs;
-    if (!m_refs) {
-        delete this;
-    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -52,25 +38,9 @@ Mutex::Mutex(RecursionType recursionType)
 {
 }
 
-Mutex::Mutex(const Mutex &mutex)
-{
-    mutex.d->ref();
-    d = mutex.d;
-}
-
 Mutex::~Mutex()
 {
-    d->deref();
-}
-
-bool Mutex::operator==(const Mutex &mutex) const
-{
-    return (d == mutex.d);
-}
-
-bool Mutex::operator!=(const Mutex &mutex) const
-{
-    return !(*this == mutex);
+    delete d;
 }
 
 }

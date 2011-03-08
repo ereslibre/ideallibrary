@@ -44,7 +44,6 @@ public:
     };
 
     Mutex(RecursionType recursionType = NoRecursive);
-    Mutex(const Mutex &mutex);
     virtual ~Mutex();
 
     /**
@@ -65,9 +64,6 @@ public:
       * Unlocks this mutex.
       */
     void unlock();
-
-    bool operator==(const Mutex &mutex) const;
-    bool operator!=(const Mutex &mutex) const;
 
 private:
     class Private;

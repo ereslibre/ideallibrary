@@ -30,12 +30,6 @@ class Mutex::Private
 public:
     Private();
     virtual ~Private();
-
-    void ref();
-    void deref();
-
-private:
-    size_t m_refs;
 };
 
 }
