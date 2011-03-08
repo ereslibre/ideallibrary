@@ -19,6 +19,7 @@
  */
 
 #include <cppunit/extensions/HelperMacros.h>
+
 #include <core/ideal_string.h>
 
 class StringTest
