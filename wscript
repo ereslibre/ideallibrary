@@ -43,63 +43,62 @@ checkCompilerFeatures = '''struct A {}; struct B {};
                            }'''
 
 def init(ctx):
-    pass
+	pass
 
 def options(opt):
-    opt.load('compiler_cxx')
-    opt.load('waf_unit_test')
-    opt.add_option('--release', action = 'store_true', default = False,
-                   help = 'Do not build unit tests. Compile without debug information')
+	opt.load('compiler_cxx')
+	opt.load('waf_unit_test')
+	opt.add_option('--release', action = 'store_true', default = False,
+	               help = 'Do not build unit tests. Compile without debug information')
 
 def configure(conf):
-    conf.env['POSIX_PLATFORMS'] = posixPlatforms
-    conf.load('compiler_cxx')
-    conf.load('waf_unit_test')
+	conf.env['POSIX_PLATFORMS'] = posixPlatforms
+	conf.load('compiler_cxx')
+	conf.load('waf_unit_test')
 
-    if conf.env['COMPILER_CXX'] == []:
-        conf.fatal('A C++ compiler is needed. Please, install it and try again')
+	if conf.env['COMPILER_CXX'] == []:
+		conf.fatal('A C++ compiler is needed. Please, install it and try again')
 
-    conf.env['CXXFLAGS_CONFTESTS'] += ['-std=c++0x'];
+	conf.env['CXXFLAGS_CONFTESTS'] += ['-std=c++0x'];
 
-    conf.check(fragment = checkCompilerFeatures,
-               msg = 'Checking whether ' + conf.env['COMPILER_CXX'] + ' supports C++0x',
-               uselib = 'CONFTESTS',
-               mandatory = 1)
+	conf.check(fragment = checkCompilerFeatures,
+	           msg = 'Checking whether ' + conf.env['COMPILER_CXX'] + ' supports C++0x',
+	           uselib = 'CONFTESTS', mandatory = True)
 
-    conf.sub_config(subdirs)
+	conf.sub_config(subdirs)
 
-    conf.env['RELEASE'] = Options.options.release
-    conf.env['CXXFLAGS'] += ['-std=c++0x', '-fvisibility=hidden']
+	conf.env['RELEASE'] = Options.options.release
+	conf.env['CXXFLAGS'] += ['-std=c++0x', '-fvisibility=hidden']
 
-    if conf.env['DEST_OS'] in posixPlatforms:
-        conf.define('IDEAL_OS_POSIX', 1)
-    else:
-        conf.undefine('IDEAL_OS_POSIX')
+	if conf.env['DEST_OS'] in posixPlatforms:
+		conf.define('IDEAL_OS_POSIX', 1)
+	else:
+		conf.undefine('IDEAL_OS_POSIX')
 
-    conf.define('IDEALLIBRARY_PREFIX', conf.env['PREFIX'])
-    conf.define('IDEALLIBRARY_VERSION', VERSION)
+	conf.define('IDEALLIBRARY_PREFIX', conf.env['PREFIX'])
+	conf.define('IDEALLIBRARY_VERSION', VERSION)
 
-    if Options.options.release:
-        conf.define('NDEBUG', 1)
-    else:
-        conf.undefine('NDEBUG')
+	if Options.options.release:
+		conf.define('NDEBUG', 1)
+	else:
+		conf.undefine('NDEBUG')
 
-    if Options.options.release:
-        Logs.pprint('BLUE', '*** Going to compile in RELEASE mode')
-        conf.env['CXXFLAGS'] += ['-O2', '-w']
-    else:
-        Logs.pprint('BLUE', '*** Going to compile in DEBUG mode (default)')
-        Logs.pprint('BLUE', '*** To compile in RELEASE mode run "./waf configure --release [more-options]"')
-        conf.env['CXXFLAGS'] += ['-O', '-g', '-Wall', '-Werror']
+	if Options.options.release:
+		Logs.pprint('BLUE', '*** Going to compile in RELEASE mode')
+		conf.env['CXXFLAGS'] += ['-O2', '-w']
+	else:
+		Logs.pprint('BLUE', '*** Going to compile in DEBUG mode (default)')
+		Logs.pprint('BLUE', '*** To compile in RELEASE mode run "./waf configure --release [more-options]"')
+		conf.env['CXXFLAGS'] += ['-O', '-g', '-Wall', '-Werror']
 
-    conf.write_config_header('src/ideal_conf.h')
+	conf.write_config_header('src/ideal_conf.h')
 
 def build(bld):
-    bld.env['LIBVERSION'] = LIBVERSION
-    bld.add_subdirs(subdirs)
-    bld.install_files('${PREFIX}/include/ideal', 'src/ideal_conf.h')
-    bld.install_files('${PREFIX}/include/ideal', 'src/ideal_export.h')
-    bld.install_files('${PREFIX}/include/ideal', 'src/ideal_globals.h')
+	bld.env['LIBVERSION'] = LIBVERSION
+	bld.add_subdirs(subdirs)
+	bld.install_files('${PREFIX}/include/ideal', 'src/ideal_conf.h')
+	bld.install_files('${PREFIX}/include/ideal', 'src/ideal_export.h')
+	bld.install_files('${PREFIX}/include/ideal', 'src/ideal_globals.h')
 
 def check(ctx):
 	ctx.exec_command('./waf --alltests')

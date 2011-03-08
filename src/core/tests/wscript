@@ -27,7 +27,7 @@ def build(bld):
 		testName = re.match(r"^(.+)\.cpp$", str(unitTest)).group(1)
 		bld(features     = 'cxx cxxprogram test',
 		    source       = unitTest,
-		    target       = testName + "Test",
+		    target       = testName + 'Test',
 		    includes     = '.. ../..',
 		    install_path = None,
 		    use          = 'CPPUNIT idealcore')
