@@ -65,5 +65,5 @@ def build(bld):
     bld.install_files('${PREFIX}/include/ideal/core', bld.path.ant_glob('*.h'))
     bld.install_files('${PREFIX}/include/ideal/core/interfaces', bld.path.ant_glob('interfaces/*.h'))
 
-    if not bld.options.release:
+    if not bld.env['RELEASE']:
         bld.add_subdirs('tests')

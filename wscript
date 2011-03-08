@@ -68,6 +68,7 @@ def configure(conf):
 
     conf.sub_config(subdirs)
 
+    conf.env['RELEASE'] = Options.options.release
     conf.env['CXXFLAGS'] += ['-std=c++0x', '-fvisibility=hidden']
 
     if conf.env['DEST_OS'] in posixPlatforms:
