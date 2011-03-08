@@ -33,7 +33,7 @@ def build(bld):
 			    target       = testName,
 			    includes     = '.. ../..',
 			    install_path = None,
-			    use          = 'CPPUNIT idealcore')
+			    use          = 'CPPUNIT IDEAL idealcore')
 
 	if bld.is_install or bld.options.all_tests:
 		bld.options.all_tests = True
