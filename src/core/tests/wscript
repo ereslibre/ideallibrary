@@ -24,13 +24,16 @@ def configure(conf):
 
 def build(bld):
 	for unitTest in bld.path.ant_glob('*.cpp'):
-		testName = re.match(r"^(.+)\.cpp$", str(unitTest)).group(1)
-		bld(features     = 'cxx cxxprogram test',
-		    source       = unitTest,
-		    target       = testName + 'Test',
-		    includes     = '.. ../..',
-		    install_path = None,
-		    use          = 'CPPUNIT idealcore')
+		unitTest = str(unitTest)
+		testName = re.match(r"^(.+Test)\.cpp$", unitTest)
+		if testName != None:
+			testName = testName.group(1)
+			bld(features     = 'cxx cxxprogram test',
+			    source       = unitTest,
+			    target       = testName,
+			    includes     = '.. ../..',
+			    install_path = None,
+			    use          = 'CPPUNIT idealcore')
 
 	if bld.is_install or bld.options.all_tests:
 		bld.options.all_tests = True

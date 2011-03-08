@@ -18,7 +18,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "string.h"
+#include "stringTest.h"
 
 #include <string.h>
 

@@ -18,7 +18,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "any.h"
+#include "anyTest.h"
 
 #include <core/any.h>
 #include <core/uri.h>
