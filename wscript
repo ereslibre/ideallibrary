@@ -101,3 +101,5 @@ def build(bld):
     bld.install_files('${PREFIX}/include/ideal', 'src/ideal_export.h')
     bld.install_files('${PREFIX}/include/ideal', 'src/ideal_globals.h')
 
+def check(ctx):
+	ctx.exec_command('./waf --alltests')
