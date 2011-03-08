@@ -25,7 +25,7 @@ APPNAME = 'ideallibrary'
 top     = '.'
 out     = 'build'
 
-subdirs = 'src/core src/modules'
+subdirs = 'src/core'
 
 posixPlatforms = ['linux', 'darwin']
 
