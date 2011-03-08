@@ -4,4 +4,4 @@ syntax: glob
 .lock-wafbuild
 build/
 doc/
-
+*.kdev4
