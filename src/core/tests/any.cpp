@@ -23,10 +23,6 @@
 #include <core/any.h>
 #include <core/uri.h>
 
-#include <cppunit/CompilerOutputter.h>
-#include <cppunit/extensions/TestFactoryRegistry.h>
-#include <cppunit/ui/text/TestRunner.h>
-
 using namespace IdealCore;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(AnyTest);
@@ -215,15 +211,4 @@ void AnyTest::operatorEqualsEquals()
     }
 }
 
-int main(int argc, char **argv)
-{
-    CppUnit::Test *suite = CppUnit::TestFactoryRegistry::getRegistry().makeTest();
-
-    CppUnit::TextUi::TestRunner runner;
-    runner.addTest(suite);
-
-    runner.setOutputter(new CppUnit::CompilerOutputter(&runner.result(), std::cerr));
-    bool wasSuccessful = runner.run();
-
-    return wasSuccessful ? 0 : 1;
-}
+#include "test.h"
