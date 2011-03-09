@@ -16,7 +16,7 @@
 # the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 # Boston, MA 02110-1301, USA.
 
-import Options, Logs
+import Options, Logs, re
 
 LIBVERSION = '0.0.9'
 
@@ -101,6 +101,42 @@ def build(bld):
 	bld.install_files('${PREFIX}/include/ideal', 'src/ideal_conf.h')
 	bld.install_files('${PREFIX}/include/ideal', 'src/ideal_export.h')
 	bld.install_files('${PREFIX}/include/ideal', 'src/ideal_globals.h')
+	if bld.is_install or bld.options.all_tests:
+		bld.options.all_tests = True
+		bld.add_post_fun(cppunit_summary)
 
 def check(ctx):
 	ctx.exec_command('./waf --alltests')
+
+def cppunit_summary(bld):
+	lst = getattr(bld, 'utest_results', [])
+	if lst:
+		Logs.pprint('CYAN', 'execution summary')
+
+		total = len(lst)
+		tfail = len([x for x in lst if x[1]])
+
+		Logs.pprint('CYAN', '  tests that pass %d/%d' % (total-tfail, total))
+		for (f, code, out, err) in lst:
+			if not code:
+				Logs.pprint('CYAN', '    %s' % f)
+
+		Logs.pprint('CYAN', '  tests that fail %d/%d' % (tfail, total))
+		for (f, code, out, err) in lst:
+			if code:
+				Logs.pprint('CYAN', '    %s' % f)
+				err = err.decode()
+				err_info = re.findall(r'([\w.]+):(\d+)[^\n]+\nTest name:\s+([^\n]+)\n([^\n]+)\n', err)
+				if err_info:
+					(filename, line, test_failed, assertion_type) = err_info[0]
+					Logs.pprint('RED',  '      %s:%s - %s (%s)' % (filename, line, test_failed, assertion_type))
+					equality_info = re.findall(r'- Expected\s*:\s+([^\n]+)\n- Actual\s*:\s+(.+)', err)
+					if equality_info:
+						(expected, actual) = equality_info[0]
+						Logs.pprint('RED',  '        Expected : %s' % (expected))
+						Logs.pprint('RED',  '        Actual   : %s' % (actual))
+						continue
+					assertion_info = re.findall(r'- Expression\s*:\s+([^\n]+)\n', err)
+					if assertion_info:
+						(expression) = assertion_info[0]
+						Logs.pprint('RED',  '        Expression : %s' % (expression))

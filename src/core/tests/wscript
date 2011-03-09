@@ -34,7 +34,3 @@ def build(bld):
 			    includes     = '.. ../..',
 			    install_path = None,
 			    use          = 'CPPUNIT IDEAL idealcore')
-
-	if bld.is_install or bld.options.all_tests:
-		bld.options.all_tests = True
-		bld.add_post_fun(waf_unit_test.summary)
