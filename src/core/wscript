@@ -22,11 +22,14 @@ def configure(conf):
 	if not Options.options.release:
 		conf.sub_config('tests')
 
+	conf.env['LIB_CORE'] = ['pthread']
+
 def build(bld):
 	obj = bld(features = 'cxx cxxshlib',
 	          source   = bld.path.ant_glob('*.cpp'),
 	          target   = 'idealcore',
 	          includes = '..',
+	          use      = ['CORE'],
 	          vnum     = bld.env['LIBVERSION'])
 
 	if bld.env['DEST_OS'] in bld.env['POSIX_PLATFORMS']:
