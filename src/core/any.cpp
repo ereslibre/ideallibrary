@@ -21,6 +21,7 @@
 #include "any.h"
 
 #include <cxxabi.h>
+#include <stdlib.h>
 
 namespace IdealCore {
 

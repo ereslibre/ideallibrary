@@ -21,6 +21,8 @@
 #include "uri.h"
 #include "stack.h"
 
+#include <stdlib.h>
+
 namespace IdealCore {
 
 class Uri::Private

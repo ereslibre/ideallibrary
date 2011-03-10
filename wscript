@@ -27,7 +27,7 @@ out     = 'build'
 
 subdirs = 'src/core'
 
-posixPlatforms = ['linux', 'darwin']
+posixPlatforms = ['linux', 'darwin', 'haiku']
 
 checkCompilerFeatures = '''struct A {}; struct B {};
                            template <typename... Type>
