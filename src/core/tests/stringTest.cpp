@@ -96,9 +96,49 @@ void StringTest::testSubstr()
         CPPUNIT_ASSERT_EQUAL(String("o"), str.substr(4, 1));
     }
     {
-        String str("áéíóú𝛏Test𝛏áéíóú");
-        CPPUNIT_ASSERT_EQUAL(String("𝛏Test𝛏"), str.substr(5, 6));
+        String str("Test");
+        CPPUNIT_ASSERT_EQUAL(String("Test"), str.substr(0, 4));
     }
+    {
+        String str("Tést");
+        CPPUNIT_ASSERT_EQUAL(String("Tést"), str.substr(0, 4));
+    }
+    {
+        String str("ñTest");
+        CPPUNIT_ASSERT_EQUAL(String("Test"), str.substr(1, 4));
+    }
+    {
+        String str("𝛏𝛏Tést");
+        CPPUNIT_ASSERT_EQUAL(String("Tést"), str.substr(2, 4));
+    }
+    {
+        String str("Testñ");
+        CPPUNIT_ASSERT_EQUAL(String("Test"), str.substr(0, 4));
+    }
+    {
+        String str("Tést𝛏𝛏");
+        CPPUNIT_ASSERT_EQUAL(String("Tést"), str.substr(0, 4));
+    }
+    {
+        String str("𝛏𝛏Tést𝛏𝛏");
+        CPPUNIT_ASSERT_EQUAL(String("Tést"), str.substr(2, 4));
+    }
+    {
+        String str("𝛏𝛏Tés𝛏t𝛏𝛏");
+        CPPUNIT_ASSERT_EQUAL(String("Tés𝛏t"), str.substr(2, 5));
+    }
+    {
+        String str("áéíóú𝛏𝛏Tést𝛏𝛏áéíóú");
+        CPPUNIT_ASSERT_EQUAL(String("Tést"), str.substr(7, 4));
+    }
+    // {
+    //     String str("áéíóú𝛏𝛏Tést𝛏𝛏áéíóú");
+    //     CPPUNIT_ASSERT_EQUAL(String("𝛏Tést𝛏"), str.substr(6, 6));
+    // }
+    // {
+    //     String str("áéíóú𝛏𝛏Tést𝛏𝛏áéíóú");
+    //     CPPUNIT_ASSERT_EQUAL(String("𝛏𝛏Tést𝛏𝛏"), str.substr(5, 8));
+    // }
 }
 
 void StringTest::testSplit()
