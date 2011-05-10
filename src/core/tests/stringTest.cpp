@@ -131,14 +131,14 @@ void StringTest::testSubstr()
         String str("áéíóú𝛏𝛏Tést𝛏𝛏áéíóú");
         CPPUNIT_ASSERT_EQUAL(String("Tést"), str.substr(7, 4));
     }
-    // {
-    //     String str("áéíóú𝛏𝛏Tést𝛏𝛏áéíóú");
-    //     CPPUNIT_ASSERT_EQUAL(String("𝛏Tést𝛏"), str.substr(6, 6));
-    // }
-    // {
-    //     String str("áéíóú𝛏𝛏Tést𝛏𝛏áéíóú");
-    //     CPPUNIT_ASSERT_EQUAL(String("𝛏𝛏Tést𝛏𝛏"), str.substr(5, 8));
-    // }
+    {
+        String str("áéíóú𝛏𝛏Tést𝛏𝛏áéíóú");
+        CPPUNIT_ASSERT_EQUAL(String("𝛏Tést𝛏"), str.substr(6, 6));
+    }
+    {
+        String str("áéíóú𝛏𝛏Tést𝛏𝛏áéíóú");
+        CPPUNIT_ASSERT_EQUAL(String("𝛏𝛏Tést𝛏𝛏"), str.substr(5, 8));
+    }
 }
 
 void StringTest::testSplit()
